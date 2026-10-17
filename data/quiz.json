@@ -1,0 +1,9 @@
+{
+  "title": "PICLAB PIC18 Knowledge Run",
+  "questions": [
+    {"q":"What does TRISB0 = 0 mean?","options":["RB0 is an output","RB0 is an input","RB0 is analog only","RB0 is disabled"],"answer":0,"explanation":"A cleared TRIS bit configures the corresponding GPIO as an output in the classic PIC18 model."},
+    {"q":"Which register is the PORTB output latch?","options":["PORTB","LATB","TRISB","ADCON0"],"answer":1,"explanation":"LATB holds the output latch state for PORTB."},
+    {"q":"How many codes are available in a 10-bit ADC?","options":["256","512","1024","2048"],"answer":2,"explanation":"A 10-bit converter represents 2^10 = 1024 codes, normally 0 through 1023."},
+    {"q":"Which timer commonly provides the PWM timebase on classic PIC18 devices?","options":["Timer2","Timer0","EUSART","MSSP"],"answer":0,"explanation":"CCP PWM commonly uses Timer2 as its timebase."}
+  ]
+}

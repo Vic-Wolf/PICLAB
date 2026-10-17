@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "PICLAB — PIC18 Embedded Learning Lab",
+  "short_name": "PICLAB",
+  "description": "Interactive PIC18 learning, pinout, registers and experiment reference.",
+  "lang": "en",
+  "start_url": "./#overview",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "background_color": "#090040",
+  "theme_color": "#090040",
+  "categories": ["education", "reference", "utilities"],
+  "icons": [
+    { "src": "./assets/icons/piclab-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/piclab-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icons/piclab-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Challenges", "short_name": "Challenges", "url": "./#challenges" },
+    { "name": "Labs & Experiments", "short_name": "Labs", "url": "./#labs" },
+    { "name": "Pinout", "short_name": "Pinout", "url": "./#pinout" }
+  ]
+}

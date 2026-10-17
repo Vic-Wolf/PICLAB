@@ -1,0 +1,14 @@
+{
+  "name": "piclab-static-learning-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "PIC18 educational learning and experiment website",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/predeploy-check.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

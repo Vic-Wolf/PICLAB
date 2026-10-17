@@ -1,0 +1,616 @@
+/* PICLAB cross-device layer: fluid shell, mobile controls, touch and safe-area support. */
+:root {
+  --piclab-mobile-header-height: 106px;
+  --piclab-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 12px;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100%;
+  overscroll-behavior-x: none;
+}
+
+#app {
+  width: 100%;
+  min-width: 320px;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.app-header,
+.app-body,
+.app-content,
+.workspace-panel,
+.engineering-workspace,
+.register-layout,
+.lesson-detail-grid,
+.lab-detail-grid,
+.lab-manual-layout,
+.circuit-shell,
+.help-grid {
+  min-width: 0;
+}
+
+.app-content {
+  min-height: 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+}
+
+.workspace-panel {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  flex: 1 0 auto;
+  padding: clamp(12px, 2.1vw, 24px);
+  padding-bottom: max(clamp(20px, 3vw, 32px), var(--piclab-safe-bottom));
+}
+
+img,
+video,
+canvas,
+iframe,
+svg {
+  max-width: 100%;
+}
+
+pre,
+.lab-code,
+.lab-manual-paper,
+.reading-content,
+.register-detail,
+.card,
+.lab-card,
+.lesson-card,
+.challenge-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+pre,
+.lab-code,
+.reading-section pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+summary {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+#header-search-btn {
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+#header-search-btn kbd {
+  background: var(--bg-deep);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--active);
+}
+
+.search-label-short {
+  display: none;
+}
+
+.install-app-status {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+/* Prevent fixed two-column technical layouts from pushing beyond tablets. */
+@media (max-width: 1024px) {
+  .lesson-detail-grid,
+  .lab-detail-grid,
+  .lab-manual-layout,
+  .register-layout,
+  .help-grid,
+  .circuit-shell {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .lesson-side,
+  .lab-side {
+    min-width: 0;
+  }
+
+  .register-list {
+    max-height: min(300px, 40vh);
+  }
+
+  .pin-trivia-card {
+    grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+  }
+
+  .pin-trivia-card > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .code-map {
+    grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+  }
+
+  .code-map > :nth-child(n+4) {
+    display: none;
+  }
+}
+
+/* Compact tablet/lower-desktop header: controls occupy a second row instead of clipping. */
+@media (min-width: 769px) and (max-width: 1360px) {
+  .app-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "brand actions" "controls controls";
+    grid-template-rows: 44px 42px;
+    column-gap: 12px;
+    row-gap: 8px;
+    height: 110px;
+    min-height: 110px;
+    padding: 8px 16px;
+    align-content: start;
+  }
+
+  .brand-section { grid-area: brand; min-width: 0; height: 44px; }
+  .header-right { grid-area: actions; min-width: 0; height: 44px; gap: 8px; }
+  .header-right .badge { padding-inline: 6px; white-space: nowrap; }
+  .header-right .btn { flex-shrink: 0; min-height: 40px; padding-inline: 9px; }
+  .header-center { grid-area: controls; display: flex; width: 100%; min-width: 0; height: 42px; gap: 8px; }
+  .device-select-wrapper { flex: 1 1 290px; min-width: 0; }
+  .device-select-control { width: 100%; min-width: 0; }
+  #header-search-btn { flex: 0 1 290px; min-width: 210px; min-height: 42px; }
+}
+
+/* Mobile/tablet header uses two stable rows: brand/actions, then device/search. */
+@media (max-width: 768px) {
+  .app-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand actions"
+      "controls controls";
+    grid-template-rows: 40px 42px;
+    column-gap: 8px;
+    row-gap: 8px;
+    height: calc(var(--piclab-mobile-header-height) + env(safe-area-inset-top, 0px));
+    min-height: calc(var(--piclab-mobile-header-height) + env(safe-area-inset-top, 0px));
+    flex-shrink: 0;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) 8px max(10px, env(safe-area-inset-left, 0px));
+    align-content: start;
+  }
+
+  .brand-section {
+    grid-area: brand;
+    min-width: 0;
+    gap: 8px;
+    height: 40px;
+  }
+
+  .logo-badge {
+    font-size: 1.08rem;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .mobile-nav-toggle {
+    display: inline-flex;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    font-size: 1.15rem;
+  }
+
+  .header-right {
+    grid-area: actions;
+    min-width: 0;
+    gap: 6px;
+    justify-content: flex-end;
+    height: 40px;
+  }
+
+  #header-xp-badge,
+  #header-level-badge,
+  #header-streak-badge {
+    display: none !important;
+  }
+
+  .header-right .btn {
+    flex-shrink: 0;
+    min-height: 40px;
+    padding: 0 9px;
+    white-space: nowrap;
+  }
+
+  #header-profile-btn {
+    width: 40px;
+    min-width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  #header-profile-name {
+    display: none;
+  }
+
+  #header-theme-btn {
+    width: 40px;
+    min-width: 40px;
+    padding: 0;
+    font-size: 0;
+    justify-content: center;
+  }
+
+  #header-theme-btn::before {
+    content: "◐";
+    font-size: 18px;
+  }
+
+  #header-settings-btn {
+    width: 40px;
+    min-width: 40px;
+    padding: 0;
+  }
+
+  .header-center {
+    grid-area: controls;
+    display: flex !important;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    overflow: visible;
+  }
+
+  .device-select-wrapper {
+    flex: 1 1 180px;
+    min-width: 0;
+    max-width: 100%;
+    height: 42px;
+    padding: 0 7px;
+    gap: 5px;
+  }
+
+  .device-select-label {
+    flex: 0 0 auto;
+    font-size: 0.68rem;
+  }
+
+  .device-select-control {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+  }
+
+  #header-search-btn {
+    display: inline-flex !important;
+    flex: 0 1 120px;
+    min-width: 98px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 0.82rem;
+  }
+
+  .search-label-wide {
+    display: none;
+  }
+
+  .search-label-short {
+    display: inline;
+  }
+
+  .app-sidebar {
+    position: fixed;
+    top: calc(var(--piclab-mobile-header-height) + env(safe-area-inset-top, 0px));
+    bottom: var(--piclab-safe-bottom);
+    left: 0;
+    width: min(320px, 88vw);
+    max-width: 88vw;
+    z-index: 60;
+    padding-top: 12px;
+    padding-bottom: max(12px, var(--piclab-safe-bottom));
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+    box-shadow: var(--shadow-lg);
+    overscroll-behavior: contain;
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  .nav-link {
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+
+  .app-body {
+    min-height: 0;
+  }
+
+  .workspace-panel {
+    padding: 14px;
+  }
+
+  .engineering-workspace {
+    gap: 14px;
+    padding-bottom: max(84px, var(--piclab-safe-bottom));
+  }
+
+  .lesson-grid,
+  .challenge-grid,
+  .telemetry-grid,
+  .stats-grid,
+  .sim-grid,
+  .help-grid,
+  .lesson-detail-grid,
+  .lab-detail-grid,
+  .lab-manual-layout,
+  .circuit-shell,
+  .reference-grid,
+  .viva-grid,
+  .pin-education-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .telemetry-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .register-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+    min-height: 0;
+  }
+
+  .register-list {
+    width: 100%;
+    max-height: min(300px, 36vh);
+  }
+
+  .bit-buttons,
+  .bit-numbers {
+    gap: 4px;
+  }
+
+  .bit-cell {
+    min-width: 0;
+    min-height: 58px;
+    padding: 3px 1px;
+  }
+
+  .bit-cell small {
+    font-size: clamp(0.42rem, 1.5vw, 0.58rem);
+  }
+
+  .pin-trivia-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .pin-trivia-art {
+    max-width: 360px;
+  }
+
+  .pin-trivia-card > :last-child {
+    grid-column: auto;
+  }
+
+  .connection-head,
+  .connection-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .code-map {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .code-map > :nth-child(n) {
+    display: block;
+  }
+
+  .modal-backdrop,
+  .modal-inline {
+    padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+    overflow-y: auto;
+    align-items: center;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal-card,
+  .challenge-panel {
+    width: 100%;
+    max-width: 580px;
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    border-radius: 14px;
+  }
+
+  .modal-header,
+  .modal-body {
+    padding: 14px;
+  }
+
+  .pico-companion-hud {
+    right: max(10px, env(safe-area-inset-right, 0px));
+    bottom: max(10px, env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+  }
+
+  .pico-avatar-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  input,
+  select,
+  textarea,
+  .input-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-tag {
+    display: none;
+  }
+
+  .workspace-panel {
+    padding: 12px;
+  }
+
+  .hero-card,
+  .hero-actions,
+  .tool-row,
+  .detail-toolbar,
+  .challenge-top,
+  .sim-top {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .hero-metric {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .telemetry-strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card,
+  .lesson-card,
+  .lab-card,
+  .challenge-card,
+  .note-card,
+  .register-detail,
+  .reading-content {
+    padding: 12px;
+  }
+
+  .hero-actions .btn,
+  .tool-row > .btn,
+  .learning-quiz-entry .btn {
+    min-height: 44px;
+  }
+
+  .bit-row {
+    grid-template-columns: 36px 62px 42px minmax(0, 1fr);
+    gap: 5px;
+    font-size: 0.64rem;
+  }
+
+  .code-explain-row {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .code-explain-row p {
+    grid-column: 2;
+  }
+
+  .connection-head span,
+  .connection-row span {
+    padding: 7px 6px;
+    overflow-wrap: anywhere;
+  }
+
+  .detail-head,
+  .register-detail-inner {
+    gap: 12px;
+  }
+
+  .manual-nav {
+    position: static;
+    gap: 6px;
+  }
+
+  .manual-nav a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* 44px controls on touch-first devices improve tapping accuracy without changing desktop density. */
+@media (pointer: coarse) {
+  .nav-link,
+  button,
+  .btn,
+  .quiz-option,
+  .register-item,
+  .sfr-chip,
+  .component-tool,
+  .chip,
+  summary {
+    min-height: 44px;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 20px;
+    min-height: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* The DIP package can be internally scrolled; its inspector must stack below it on narrow screens. */
+@media (max-width: 1280px) {
+  #panel-pinout .pinout-workspace > div[style*="grid-template-columns"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #panel-pinout .pinout-workspace > div[style*="grid-template-columns"] > .card {
+    width: 100%;
+    min-width: 0;
+  }
+}

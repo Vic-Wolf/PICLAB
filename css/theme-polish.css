@@ -1,0 +1,467 @@
+/*
+ * PICLAB Theme Polish
+ * Loaded last to normalise colour contrast across components in both themes.
+ * Light: clean vanilla-white surfaces, slate text, subtle indigo accents.
+ * Dark: VS Code / Dracula-inspired surfaces and readable pastel accents.
+ */
+
+html {
+  color-scheme: dark;
+  --text-main: #f8f8f2;
+  --text: #f8f8f2;
+  --text-muted: #c9cad3;
+  --text-sub: #bd93f9;
+  --text-dim: #a7a9b8;
+  --bg: #282a36;
+  --bg-deep: #21222c;
+  --bg-surface: #343746;
+  --bg-elevated: #44475a;
+  --card: #343746;
+  --sub-card: #3b3f52;
+  --preview: #8be9fd;
+  --interactive: #6272a4;
+  --slider: #bd93f9;
+  --slider-gradient: #50fa7b;
+  --active: #8be9fd;
+  --border-subtle: rgba(248, 248, 242, .14);
+  --border-active: #8be9fd;
+  --border-focus: #8be9fd;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, .16);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, .18);
+  --shadow-lg: 0 18px 50px rgba(0, 0, 0, .28);
+  --shadow-glow: 0 0 18px rgba(139, 233, 253, .14);
+  --surface-tint: rgba(189, 147, 249, .08);
+  --surface-hover: rgba(139, 233, 253, .10);
+  --input-bg: #21222c;
+  --code-bg: #191a21;
+  --focus-ring: #8be9fd;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f8fb;
+  --bg-deep: #ffffff;
+  --bg-surface: #f3f5f9;
+  --bg-elevated: #ffffff;
+  --card: #ffffff;
+  --sub-card: #f8f9fc;
+  --preview: #4059a8;
+  --interactive: #5145cd;
+  --slider: #5145cd;
+  --slider-gradient: #1f6e8c;
+  --active: #3157c4;
+  --text-main: #202534;
+  --text: #202534;
+  --text-muted: #596275;
+  --text-sub: #5145cd;
+  --text-dim: #727b8c;
+  --border-subtle: #e0e4ec;
+  --border-active: #5672d8;
+  --border-focus: #3157c4;
+  --shadow-sm: 0 2px 5px rgba(29, 39, 68, .035);
+  --shadow-md: 0 8px 24px rgba(29, 39, 68, .055);
+  --shadow-lg: 0 18px 50px rgba(29, 39, 68, .11);
+  --shadow-glow: 0 0 18px rgba(81, 69, 205, .10);
+  --surface-tint: #f4f5ff;
+  --surface-hover: #edf2ff;
+  --input-bg: #ffffff;
+  --code-bg: #f4f6fb;
+  --focus-ring: #3157c4;
+}
+
+/* Global canvas, typography and selection */
+html[data-theme="light"] body {
+  background: var(--bg) !important;
+  color: var(--text-main) !important;
+}
+html[data-theme="dark"] body {
+  background: radial-gradient(circle at 80% 0%, rgba(125, 103, 255, .12), transparent 32%), var(--bg) !important;
+  color: var(--text-main) !important;
+}
+::selection {
+  background: var(--active);
+  color: var(--bg-deep);
+}
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+  letter-spacing: -.018em;
+}
+p, li, dd, dt, blockquote {
+  color: inherit;
+}
+a { text-underline-offset: 3px; }
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline-color: var(--focus-ring) !important; }
+
+/* Shell */
+.app-header {
+  background: var(--bg-deep) !important;
+  color: var(--text-main) !important;
+  border-bottom-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-sm);
+}
+.app-sidebar {
+  background: var(--bg-deep) !important;
+  border-right-color: var(--border-subtle) !important;
+}
+.app-content { background: var(--bg) !important; color: var(--text-main); }
+.logo-badge, .brand-section, .header-center, .header-right { color: var(--text-main); }
+.device-select-label { color: var(--text-muted) !important; }
+.device-select-control {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+.nav-group-title { color: var(--text-dim) !important; }
+.nav-link {
+  color: var(--text-muted) !important;
+  border-color: transparent;
+}
+.nav-link:hover {
+  color: var(--text-main) !important;
+  background: var(--surface-hover) !important;
+}
+.nav-link.active {
+  color: var(--text-main) !important;
+  background: var(--surface-tint) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: inset 3px 0 var(--active);
+}
+.nav-badge { color: var(--active) !important; }
+
+/* Readable surfaces: override old hard-coded white text in generic cards. */
+.card, .sub-card, .modal-card, .lesson-card, .lab-card, .challenge-card,
+.note-card, .register-list, .register-detail, .quiz-panel, .reading-content,
+.lab-checklist-card, .lab-sim-card, .inspect-card, .panel, .faq,
+.difficulty-card, .note, .help-card {
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+  box-shadow: var(--shadow-sm);
+}
+.card, .modal-card, .lesson-card, .lab-card, .challenge-card, .note-card,
+.register-list, .register-detail, .quiz-panel, .reading-content,
+.lab-checklist-card, .lab-sim-card, .inspect-card, .panel, .faq,
+.difficulty-card, .note, .help-card {
+  background: var(--card) !important;
+}
+.sub-card { background: var(--sub-card) !important; }
+.card-title, .modal-header h2, .register-detail h2,
+.register-detail h3, .reading-content h1, .reading-content h2,
+.reading-content h3, .lab-manual-paper h2 {
+  color: var(--text-main) !important;
+}
+.card-subtitle, .hero-card p, .lesson-card p, .lab-card p, .challenge-card p,
+.note-card p, .help-step span, .faq p, .profile-note, .reading-section p,
+.reading-section li, .lab-side p, .detail-head p, .register-item small,
+.detail-progress, .lesson-meta, .lab-live-status, .form-group,
+.topic-row, .topic-row small {
+  color: var(--text-muted) !important;
+}
+.eyebrow, .section-label, .nav-group-title, .form-label,
+.register-value span, .register-value small, .bit-numbers span {
+  color: var(--preview) !important;
+}
+.hero-card {
+  background: linear-gradient(135deg, var(--card), var(--sub-card)) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+.hero-metric {
+  background: linear-gradient(135deg, var(--interactive), var(--slider-gradient)) !important;
+}
+.hero-metric span { color: #fff !important; }
+.xp-pill {
+  color: var(--active) !important;
+  background: var(--surface-tint) !important;
+  border-color: var(--border-subtle) !important;
+}
+.chip {
+  color: var(--text-main) !important;
+  background: var(--surface-tint) !important;
+  border-color: var(--border-subtle) !important;
+}
+.chip:hover, .chip.active {
+  background: var(--active) !important;
+  color: #111827 !important;
+}
+
+/* Inputs and buttons */
+.input-text, .select-dropdown, input, select, textarea {
+  color: var(--text-main);
+}
+.input-text, .select-dropdown, select, textarea, .inspector-controls input,
+.inspector-controls select {
+  background: var(--input-bg) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+.input-text::placeholder, input::placeholder, textarea::placeholder {
+  color: var(--text-dim) !important;
+  opacity: 1;
+}
+.btn-secondary {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+.btn-secondary:hover {
+  background: var(--surface-hover) !important;
+  border-color: var(--border-active) !important;
+  color: var(--text-main) !important;
+}
+.btn-primary {
+  background: var(--interactive) !important;
+  border-color: var(--interactive) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-active {
+  background: var(--active) !important;
+  color: #132033 !important;
+  border-color: var(--active) !important;
+}
+.btn-danger { color: #fff !important; }
+.badge-xp { color: #9a6700 !important; background: #fff4cf !important; border-color: #f3d77a !important; }
+.badge-level { color: var(--text-sub) !important; background: var(--surface-tint) !important; }
+.badge-streak { color: #b45309 !important; background: #fff0dc !important; border-color: #f5d0a1 !important; }
+
+/* Register explorer — avoid pale-on-pale or white-on-white bit labels. */
+.register-item {
+  color: var(--text-main) !important;
+  background: transparent !important;
+}
+.register-item:hover, .register-item.active {
+  background: var(--surface-hover) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-active) !important;
+}
+.bit-editor {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+}
+.bit-cell {
+  background: var(--sub-card) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-subtle) !important;
+}
+.bit-cell.on {
+  background: var(--active) !important;
+  color: #142039 !important;
+  border-color: var(--active) !important;
+}
+.bit-row { border-bottom-color: var(--border-subtle) !important; }
+.bit-row p { color: var(--text-muted) !important; }
+.sfr-chip {
+  color: var(--text-main) !important;
+  background: var(--surface-tint) !important;
+}
+.sfr-chip:hover { background: var(--surface-hover) !important; }
+.sfr-chip span, .sfr-chip b, .register-value strong { color: var(--text-sub) !important; }
+
+/* Pinout and trivia */
+.pin, .pin-button, .pin-cell, .pin-package button {
+  color: var(--text-main);
+}
+.pin-education, .pin-education-grid > div {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
+.pin-trivia-card {
+  background: var(--card) !important;
+  border-color: var(--border-subtle) !important;
+}
+.pin-trivia-art { background: var(--bg-surface) !important; }
+.pin-trivia-copy h3 { color: var(--text-main) !important; }
+.pin-trivia-copy p { color: var(--text-muted) !important; }
+.pin-trivia-copy small { color: var(--text-dim) !important; }
+
+/* Quiz, progress, search results and help */
+.quiz-option, .register-item, .component-tool {
+  color: var(--text-main) !important;
+}
+.quiz-option {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-subtle) !important;
+}
+.quiz-option:hover, .quiz-option.selected {
+  background: var(--surface-hover) !important;
+  border-color: var(--border-active) !important;
+}
+.quiz-option.correct { background: rgba(22, 163, 74, .12) !important; color: var(--text-main) !important; }
+.quiz-option.incorrect { background: rgba(220, 38, 38, .10) !important; color: var(--text-main) !important; }
+.reference-grid a { color: var(--text-sub) !important; background: var(--surface-tint) !important; }
+.reference-grid a:hover { background: var(--surface-hover) !important; }
+.faq summary { color: var(--text-main) !important; }
+.faq p { color: var(--text-muted) !important; }
+.empty-state { color: var(--text-muted) !important; }
+
+/* Lab manual pages */
+.manual-nav {
+  background: var(--bg-deep) !important;
+  border-color: var(--border-subtle) !important;
+}
+.manual-nav a { color: var(--text-main) !important; background: var(--surface-tint) !important; }
+.manual-nav a:hover { background: var(--active) !important; color: #142039 !important; }
+.connection-graphic, .connection-table, .connection-row {
+  border-color: var(--border-subtle) !important;
+}
+.connection-graphic { background: var(--surface-tint) !important; }
+.source-node { background: var(--bg-surface) !important; color: var(--text-main) !important; }
+.connection-line { color: var(--text-main) !important; }
+.connection-line small { color: var(--text-muted) !important; }
+.connection-head { background: var(--bg-surface) !important; color: var(--text-sub) !important; }
+.connection-row:nth-child(odd) { background: var(--surface-tint) !important; }
+.connection-row span { color: var(--text-muted) !important; }
+.code-understanding-note, .source-code-note, .result-box, .observation-box {
+  background: var(--surface-tint) !important;
+  border-color: var(--border-subtle) !important;
+}
+.code-understanding-note p, .source-code-note p,
+.result-box span, .observation-box span { color: var(--text-muted) !important; }
+.code-map > div { background: var(--surface-tint) !important; border-color: var(--border-subtle) !important; }
+.code-map b { color: var(--text-main) !important; }
+.code-map span { color: var(--text-muted) !important; }
+.code-explain-row { border-color: var(--border-subtle) !important; }
+.code-explain-row p { color: var(--text-muted) !important; }
+
+/* PICO and modals */
+.pico-speech-card {
+  background: var(--bg-elevated) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-main) !important;
+}
+.pico-speech-card::after { border-top-color: var(--border-subtle) !important; }
+.pico-speech-text { color: var(--text-main) !important; }
+.pico-name-tag, .pico-mood-badge { color: var(--text-sub) !important; }
+.pico-avatar-btn { background: var(--bg-elevated) !important; border-color: var(--interactive) !important; }
+.modal-backdrop, .modal-inline { background: rgba(10, 12, 22, .56) !important; }
+.modal-card {
+  background: var(--card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-main) !important;
+}
+.modal-header h2, .modal-card h2 { color: var(--text-main) !important; }
+.modal-body, .modal-body p, .modal-body label { color: var(--text-muted); }
+#search-modal [style*="color: var(--preview)"] { color: var(--text-sub) !important; }
+
+/* Code and terminal areas remain intentionally high-contrast in both themes. */
+.reading-section pre, .lab-code, .terminal-window, .quiz-code,
+.code-block, pre:not(.plain-text) {
+  background: var(--code-bg) !important;
+  color: var(--code-text, #dbeafe) !important;
+  border-color: var(--border-subtle) !important;
+}
+html[data-theme="dark"] {
+  --code-bg: #191a21;
+  --code-text: #f8f8f2;
+}
+html[data-theme="light"] {
+  --code-bg: #f2f4f8;
+  --code-text: #1f2937;
+}
+kbd { background: var(--bg-surface) !important; color: var(--text-sub) !important; border-color: var(--border-subtle) !important; }
+
+/* Sleeker details: less glow, more hierarchy, consistent interaction. */
+.card, .modal-card, .lesson-card, .lab-card, .challenge-card, .note-card,
+.register-list, .register-detail, .quiz-panel, .reading-content {
+  border-radius: 16px !important;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.lesson-card:hover, .lab-card:hover, .challenge-card:hover, .note-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-active) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+.nav-link, .btn, .chip, .register-item, .quiz-option {
+  transition: background-color .16s ease, color .16s ease, border-color .16s ease;
+}
+.progress-track, .quiz-progress { background: var(--bg-surface) !important; }
+.progress-track span, .quiz-progress span {
+  background: linear-gradient(90deg, var(--interactive), var(--active)) !important;
+}
+hr { border: 0; border-top: 1px solid var(--border-subtle); }
+
+
+/* Final light-theme contrast pass for legacy, inline-styled components. */
+html[data-theme="light"] .app-sidebar > div:last-child > div:first-child {
+  color: var(--text-main) !important;
+}
+html[data-theme="light"] .pin-lead-row > div:first-child > span:not(.badge) {
+  color: var(--text-main) !important;
+}
+html[data-theme="light"] #pin-detail-panel .interactive-panel {
+  color: #ffffff !important;
+  background: #3f35a8 !important;
+}
+html[data-theme="light"] #pin-detail-panel .interactive-panel span,
+html[data-theme="light"] #pin-detail-panel .interactive-panel strong {
+  color: #ffffff !important;
+}
+html[data-theme="light"] #pin-detail-panel .interactive-panel .btn-secondary {
+  background: #ffffff !important;
+  color: #202534 !important;
+  border-color: #dfe3ec !important;
+}
+html[data-theme="light"] .manual-steps li {
+  background: #f4f5ff !important;
+  color: #202534 !important;
+  border-color: #dfe3ec !important;
+}
+html[data-theme="light"] .manual-steps li > span {
+  color: #5145cd !important;
+}
+html[data-theme="light"] .connection-line {
+  color: #202534 !important;
+}
+html[data-theme="light"] .search-result-item span[style*="var(--text-main)"] {
+  color: var(--text-main) !important;
+}
+html[data-theme="light"] .pinout-workspace .card[style*="background: var(--bg-deep)"] {
+  background: #f8f9fc !important;
+}
+html[data-theme="light"] .pinout-workspace .pin-contact-btn {
+  color: #ffffff !important;
+}
+html[data-theme="light"] .pinout-workspace .pin-trivia-copy h3 {
+  color: var(--text-main) !important;
+}
+html[data-theme="light"] .lab-manual-paper .section-number {
+  color: #ffffff !important;
+}
+html[data-theme="light"] .tooltip-target:hover::after {
+  background: #ffffff !important;
+  color: #202534 !important;
+  border-color: #dfe3ec !important;
+}
+
+
+/* Device-data coverage notices: important for responsible technical publishing. */
+.device-coverage-note,
+.device-coverage-warning {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  margin: 12px 0;
+  font-size: .78rem;
+  line-height: 1.5;
+}
+.device-coverage-note {
+  color: var(--text-muted);
+  background: var(--surface-tint);
+  border: 1px solid var(--border-subtle);
+}
+.device-coverage-note strong { color: var(--text-sub); }
+.device-coverage-warning {
+  color: var(--text-main);
+  background: rgba(255, 184, 108, .11);
+  border: 1px solid rgba(255, 184, 108, .5);
+}
+.device-coverage-warning strong { color: #d97706; }
+html[data-theme="dark"] .device-coverage-warning strong { color: #ffb86c; }
+.device-coverage-warning span, .device-coverage-note span { color: var(--text-muted); }

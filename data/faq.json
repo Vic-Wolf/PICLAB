@@ -1,0 +1,41 @@
+{
+  "title": "PICLAB FAQ",
+  "items": [
+    {
+      "q": "What is PICLAB?",
+      "a": "PICLAB is an independent educational website for learning PIC18 architecture, reading pin/register references, studying embedded-C concepts, and following experiment manuals."
+    },
+    {
+      "q": "Does PICLAB include a circuit builder or interactive lab simulator?",
+      "a": "No. The standalone Circuit Lab and experiment simulation controls were intentionally removed. Experiment pages provide manual-style instructions, connection guidance, source-code listings where supplied, code explanations and viva questions."
+    },
+    {
+      "q": "Which microcontroller does PICLAB cover?",
+      "a": "PICLAB is dedicated to the PIC18F4520. Its pinout is mapped for the 40-pin DIP package, and the register explorer contains a curated educational subset. Verify details against the official PIC18F4520 datasheet before hardware work."
+    },
+    {
+      "q": "What does TRIS do?",
+      "a": "In the classic PIC18 GPIO model, a TRIS bit of 1 configures the corresponding GPIO as an input; a 0 configures it as an output. Analog configuration and peripheral multiplexing may further affect pin behaviour."
+    },
+    {
+      "q": "What is LAT used for?",
+      "a": "LAT registers represent output latches. Writing LAT and reading PORT are different operations; peripheral multiplexing can also affect which function controls a pin."
+    },
+    {
+      "q": "Can I save my progress?",
+      "a": "Progress, the selected device and preferences are stored in this browser using LocalStorage. Use Settings to export or import a JSON backup. Data does not sync between devices."
+    },
+    {
+      "q": "Is the Login ID a real account?",
+      "a": "No. It is a local profile label only. PICLAB has no backend authentication, account recovery or multi-device sync. Do not enter passwords or sensitive personal information."
+    },
+    {
+      "q": "Is PICLAB affiliated with Microchip?",
+      "a": "No. PICLAB is an independent educational project, not affiliated with or endorsed by Microchip Technology. Verify device facts using the official datasheet before real hardware work."
+    },
+    {
+      "q": "Can I upload example code directly to hardware?",
+      "a": "Treat examples as teaching material. Confirm device, clock, configuration bits, pin multiplexing, current limits, driver circuitry and compiler version before programming a physical board."
+    }
+  ]
+}

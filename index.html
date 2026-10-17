@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090040">
+  <meta name="color-scheme" content="dark light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icons/piclab-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+  <meta name="description" content="PICLAB — Interactive PIC18 learning, pinout and experiment environment.">
+  <title>PICLAB — PIC18 Embedded Learning & Experiment Lab</title>
+  
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pico.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/theme-polish.css">
+  <link rel="stylesheet" href="css/device-support.css">
+  <link rel="stylesheet" href="css/design-system.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Master Header -->
+    <header class="app-header" role="banner">
+      <div class="brand-section">
+        <!-- Mobile Drawer Toggle -->
+        <button class="mobile-nav-toggle" id="mobile-nav-btn" aria-label="Open navigation menu" aria-controls="app-sidebar" aria-expanded="false" title="Open Menu" type="button">
+          ☰
+        </button>
+
+        <a href="#overview" class="logo-badge" id="app-logo-link">
+          <div class="ic-chip" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94DAFF" stroke-width="2">
+              <rect x="5" y="5" width="14" height="14" rx="2" />
+              <line x1="9" y1="2" x2="9" y2="5" />
+              <line x1="15" y1="2" x2="15" y2="5" />
+              <line x1="9" y1="19" x2="9" y2="22" />
+              <line x1="15" y1="19" x2="15" y2="22" />
+              <line x1="2" y1="9" x2="5" y2="9" />
+              <line x1="2" y1="15" x2="5" y2="15" />
+              <line x1="19" y1="9" x2="22" y2="9" />
+              <line x1="19" y1="15" x2="22" y2="15" />
+            </svg>
+          </div>
+          <span>PICLAB</span>
+        </a>
+        <span class="logo-tag">PIC18 ARCHITECTURE</span>
+      </div>
+
+      <!-- Center Controls: Device Picker & Quick Search Trigger -->
+      <div class="header-center">
+        <div class="device-select-wrapper" aria-label="Active microcontroller target">
+          <span class="device-select-label">MCU:</span>
+          <span class="device-select-control device-target-label">PIC18F4520</span>
+        </div>
+
+        <button class="btn btn-secondary btn-sm" id="header-search-btn" aria-label="Search documentation, pins, and registers" title="Search documentation and registers (Press /)" type="button">
+          <span class="search-label-wide">🔍 Search notes, pins &amp; registers</span>
+          <span class="search-label-short">🔍 Search</span>
+          <kbd aria-hidden="true">/</kbd>
+        </button>
+      </div>
+
+      <!-- Right Gamification Badges & Status -->
+      <div class="header-right">
+        <span class="badge badge-xp" id="header-xp-badge" title="Total Experience Points">⚡ 0 XP</span>
+        <span class="badge badge-level" id="header-level-badge" title="Current Rank">LVL 1</span>
+        <span class="badge badge-streak" id="header-streak-badge" title="Daily Learning Streak">🔥 0d</span>
+        <button class="btn btn-secondary btn-sm" id="header-profile-btn" aria-label="Open learning profile" title="Learning profile" type="button">👤 <span id="header-profile-name">Profile</span></button>
+        <button class="btn btn-secondary btn-icon" id="header-settings-btn" title="Application Settings & Backup" aria-label="Settings" type="button">⚙️</button>
+      </div>
+    </header>
+
+    <!-- Master Application Body -->
+    <div class="app-body">
+      <!-- Mobile Backdrop -->
+      <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+      <!-- Navigation Sidebar -->
+      <nav class="app-sidebar" id="app-sidebar" role="navigation" aria-label="Main Navigation">
+        <!-- Rendered dynamically by navigation.js -->
+      </nav>
+
+      <!-- Main Dynamic Workspace View Area -->
+      <main class="app-content" id="app-content" role="main">
+        <!-- Rendered dynamically based on active tab -->
+      </main>
+    </div>
+
+    <!-- PICO Interactive Learning Companion Floating HUD -->
+    <aside class="pico-companion-hud" id="pico-container" aria-label="PICO Virtual Assistant">
+      <!-- Rendered dynamically by pico.js -->
+    </aside>
+
+    <!-- Global Search Modal Dialog -->
+    <div class="modal-backdrop" id="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.1rem;">🔍</span>
+            <h2 id="search-modal-title" style="font-size: 1.1rem; color: var(--text-main); font-weight: 700;">Global Search</h2>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="search-modal-close" aria-label="Close search">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" id="global-search-input" class="input-text" placeholder="Type a register, pin, lab, or device..." autocomplete="off">
+          </div>
+          <div style="font-size: 0.75rem; color: var(--preview); margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
+            <span>MATCHING TOPICS & WORKSPACES</span>
+            <span>Use ↑ ↓ to navigate, Enter to select</span>
+          </div>
+          <ul id="search-results-list" style="list-style: none; padding: 0;">
+            <!-- Rendered dynamically by search.js -->
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal-backdrop" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+      <div class="modal-card profile-modal-card">
+        <div class="modal-header"><h2 id="profile-modal-title">👤 Your PICLAB profile</h2><button class="btn btn-secondary btn-sm" id="profile-modal-close">✕</button></div>
+        <div class="modal-body">
+          <p class="profile-note">Your profile is stored locally in this browser. No server account is created yet.</p>
+          <label class="form-group"><span>Profile ID (this browser only)</span><input id="profile-login-id" class="input-text" placeholder="e.g. student-001"></label>
+          <label class="form-group"><span>Display name</span><input id="profile-display-name" class="input-text" placeholder="Your name"></label>
+          <button class="btn btn-primary" id="profile-save-btn">Save profile</button>
+          <div class="profile-warning" id="profile-warning"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings & State Portability Modal -->
+    <div class="modal-backdrop" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="settings-modal-title" style="font-size: 1.1rem; color: var(--text-main); font-weight: 700;">⚙️ System Settings & State Portability</h2>
+          <button class="btn btn-secondary btn-sm" id="settings-modal-close" aria-label="Close settings">✕</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            PICLAB stores your local profile, register-view state, and learning progress in this browser. This is not online authentication or cloud sync. Use Export/Import to move a backup between devices.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="btn btn-primary" id="install-app-btn" type="button">📲 Install / Add to Home Screen</button>
+            <p id="install-app-status" class="install-app-status" role="status" aria-live="polite">Install PICLAB on this device for a home-screen shortcut. Once cached, the app shell can open offline.</p>
+            <button class="btn btn-secondary" id="modal-export-btn">
+              📥 Export Session to JSON File
+            </button>
+            <button class="btn btn-secondary" id="modal-import-btn">
+              📤 Import Session from JSON
+            </button>
+            <button class="btn btn-danger" id="modal-reset-btn">
+              ⚠️ Reset Everything to Factory Defaults
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main ES6 Application Entry Point -->
+  <footer class="piclab-footer" aria-label="Keyboard shortcuts"><span><strong>Keyboard shortcuts</strong></span><span><kbd>/</kbd> or <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>K</kbd> Search</span><span><kbd>Esc</kbd> Close dialog</span><span>PICLAB · PIC18F4520 learning environment</span></footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
